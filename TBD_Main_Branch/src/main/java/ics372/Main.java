@@ -102,12 +102,7 @@ public class Main extends Application {
                     new FileChooser.ExtensionFilter("All files", "*"));
             File file = fileChooser.showOpenDialog(window);
             if(file != null){
-                if(textArea.getText().equals(""))
-                    textArea.setText(controller.processJsonInputFile(file.getName()));
-                else
-                    textArea.setText(String.format("%s%n%s",
-                            textArea.getText(),
-                            controller.processJsonInputFile(file.getName())));
+                textArea.setText(controller.processJsonInputFile(file.getName()));
 
                 if (warehouseComboBox.getItems().size() > 0) {
                     warehouseComboBox.getSelectionModel().clearSelection();
@@ -186,9 +181,7 @@ public class Main extends Application {
         });
 
         printAllWarehouseShipmentsButton.setOnAction(a -> {
-            textArea.setText(String.format("%s%n%s",
-                    textArea.getText(),
-                    controller.printAllWarehousesWithShipments()));
+            textArea.setText(controller.printAllWarehousesWithShipments());
             textArea.setScrollTop(Double.MAX_VALUE);
         });
 

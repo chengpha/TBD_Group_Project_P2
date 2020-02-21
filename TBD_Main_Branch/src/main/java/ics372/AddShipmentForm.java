@@ -94,6 +94,11 @@ public class AddShipmentForm extends Stage {
                     receiptDate
                     );
             warehouse.addShipment(shipment);
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setContentText(String.format("Shipment %s has been added to warehouse %s"
+                    ,shipment.getShipmentId()
+                    ,warehouse.getWarehouseId()));
+            alert.show();
             close();
         });
 
