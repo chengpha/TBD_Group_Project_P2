@@ -11,6 +11,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Utility class has been added for decoupling purposes. The use of Gson library in the application with all
+ * its implementation logic has been moved here. That will allow for an easy replacement of Gson library in
+ * the app if there was ever a need to do so in the future. Utility class is also responsible for all the
+ * reading/writing file operations.
+ */
 public class Utility  {
     public static Collection<Shipment>  processJsonInputFile(String file) {
         Collection<Shipment> list = new ArrayList();

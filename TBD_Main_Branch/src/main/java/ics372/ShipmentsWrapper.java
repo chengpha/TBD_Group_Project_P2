@@ -3,8 +3,7 @@ package sample;
 import java.util.Collection;
 
 /**
- * The class is used as a wrapper to extract the list of imported shipments from JSON file
- * and export all shipments for a given warehouse to a JSON file.
+ * The class is used as a wrapper class to import/export shipments from/to JSON file.
  */
 public class ShipmentsWrapper {
     private Collection<Shipment> warehouse_contents;

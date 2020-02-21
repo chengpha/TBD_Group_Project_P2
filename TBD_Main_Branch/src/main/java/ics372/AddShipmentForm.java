@@ -9,9 +9,9 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 
-import java.text.ParseException;
-
-
+/**
+ * Allows to add a new shipment to a warehouse.
+ */
 public class AddShipmentForm extends Stage {
 
     Warehouse warehouse;
@@ -59,10 +59,10 @@ public class AddShipmentForm extends Stage {
         root.add(receiptDateText, 1, 3);
         root.add(hbox, 1, 4);
 
-        setScene(new Scene(root, 310,230));
+        setScene(new Scene(root, 310,200));
         show();
 
-        //event handlers
+
         //add a shipment
         addButton.setOnAction(a -> {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -96,6 +96,7 @@ public class AddShipmentForm extends Stage {
             warehouse.addShipment(shipment);
             close();
         });
+
         //close the form
         cancelButton.setOnAction(a -> {
             close();
