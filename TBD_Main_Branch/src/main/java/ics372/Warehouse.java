@@ -1,20 +1,12 @@
-package ics372;
+package sample;
 
-
-import com.google.gson.Gson;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
-/**
- * This class creates and manages the warehouse. It creates a warehouse with an ID, a list of shipments,
- * and whether or not shipment receiving is enabled/disabled.
- * This class allows you to add shipments to a warehouse, get the warehouseID, enable/disable freight based
- * on the JSON file as well.
- */
 public class Warehouse {
     private String warehouse_id;
-    private List<Shipment> shipments = new ArrayList<>();
-    private boolean freightReceiptEnable = true;
+    private Collection<Shipment> shipments = new ArrayList<>();
+    boolean freightReceiptEnable = true;
 
     public Warehouse(String warehouse_id){
         this.warehouse_id = warehouse_id;
@@ -41,9 +33,7 @@ public class Warehouse {
 
     public boolean isFreightReceiptEnabled(){ return freightReceiptEnable; }
 
-    public String exportAllShipmentsToJsonString(){
-        return new Gson().toJson(new Shipments(shipments));
-    }
+    public Collection<Shipment> getShipments(){ return shipments;}
 
     @Override
     public String toString(){ return warehouse_id;}

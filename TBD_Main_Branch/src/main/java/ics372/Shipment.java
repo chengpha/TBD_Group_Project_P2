@@ -1,10 +1,5 @@
-package ics372;
+package sample;
 
-/**
- * This class creates the shipment object. A shipment object has:
- * a warehouse ID, shipment ID, weight, and receipt date.
- * Also allows to retrieve the shipment ID and warehouse ID.
- */
 public class Shipment {
     private String warehouse_id;
     private String shipment_id;
@@ -20,6 +15,7 @@ public class Shipment {
         this.receipt_date = receipt_date;
     }
 
+    //getters
     public String getShipmentId(){ return shipment_id; }
 
     public String getWarehouseId(){ return warehouse_id; }

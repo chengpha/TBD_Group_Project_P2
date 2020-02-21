@@ -1,4 +1,4 @@
-package ics372;
+package sample;
 
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
@@ -15,30 +15,23 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Date;
 
-/**
- * This program reads a JSON file to retrieve all shipments to warehouses,
- * adds shipments, enables/disables shipments to a warehouse,
- * and exports everything again to a JSON file when completed.
- */
 
 public class Main extends Application {
 
-    // starts the GUI
+    Stage window;
+
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        // sets up the GUI
+    public void start(Stage primaryStage) {
+        window = primaryStage;
         Controller controller = new Controller();
-        primaryStage.setTitle("Project Assignment 1");
-        GridPane mainPane = new GridPane();
-        mainPane.setHgap(4);
-        mainPane.setVgap(4);
-        mainPane.setPadding(new Insets(5));
+        window.setTitle("GroupProject1");
+        GridPane root = new GridPane();
+        root.setHgap(10);
+        root.setVgap(8);
+        root.setPadding(new Insets(5));
 
         ColumnConstraints colConstraint1 = new ColumnConstraints();
         colConstraint1.setHgrow(Priority.NEVER);
@@ -46,7 +39,7 @@ public class Main extends Application {
         ColumnConstraints colConstraint2 = new ColumnConstraints();
         colConstraint2.setHgrow(Priority.ALWAYS);
 
-        mainPane.getColumnConstraints().addAll(colConstraint1, colConstraint2);
+        root.getColumnConstraints().addAll(colConstraint1, colConstraint2);
 
         RowConstraints rowConstraint1 = new RowConstraints();
         rowConstraint1.setVgrow(Priority.NEVER);
@@ -54,111 +47,126 @@ public class Main extends Application {
         RowConstraints rowConstraint2 = new RowConstraints();
         rowConstraint2.setVgrow(Priority.ALWAYS);
 
-        mainPane.getRowConstraints().addAll(rowConstraint1, rowConstraint1, rowConstraint1, rowConstraint1, rowConstraint2);
+        root.getRowConstraints().addAll(rowConstraint1
+                                        ,rowConstraint1
+                                        ,rowConstraint1
+                                        ,rowConstraint1
+                                        ,rowConstraint1
+                                        ,rowConstraint2);
 
-        // creates all the buttons needed to operate
+        //buttons
         Button fileChooserButton = new Button("Choose File");
-        TextArea primaryArea = new TextArea();
-        primaryArea.setEditable(false);
-        primaryArea.setScrollTop(Double.MAX_VALUE);
         Button printAllWarehouseShipmentsButton = new Button("Display All Shipments");
         Button closeButton = new Button("Close");
+        Button disableEnableFreightButton = new Button("Disable");
+        disableEnableFreightButton.setDisable(true);
+        Button addShipmentButton = new Button("Add");
+        addShipmentButton.setDisable(true);
+        Button exportToJsonButton = new Button("Export All");
+        exportToJsonButton.setDisable(true);
+        //combo box
         ComboBox warehouseComboBox = new ComboBox();
         warehouseComboBox.setDisable(true);
-        Label warehouseLabel = new Label("Select Warehouse from Dropdown Menu: ");
-        Button disableEnableFreightButton = new Button("Disable Freight for Selected Warehouse");
-        disableEnableFreightButton.setDisable(true);
-        Button exportToJsonButton = new Button("Export All Shipments for Selected Warehouse To Json File");
-        exportToJsonButton.setDisable(true);
+        //text area
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setScrollTop(Double.MAX_VALUE);
+        //labels
+        Label warehouseLabel = new Label("Select Warehouse: ");
+        Label disableLabel = new Label("Disable/Enable Freight: ");
+        Label addShipmentLabel = new Label("Add Shipment: ");
+        Label exportLabel = new Label("Export All Shipments To Json File: ");
+
         GridPane.setHalignment(printAllWarehouseShipmentsButton, HPos.RIGHT);
 
-        // adds all the panes
-        mainPane.add(fileChooserButton, 0, 0);
-        mainPane.add(warehouseLabel, 0, 1);
-        mainPane.add(warehouseComboBox, 1, 1);
-        mainPane.add(disableEnableFreightButton, 0, 2);
-        mainPane.add(exportToJsonButton, 0, 3);
-        mainPane.add(primaryArea, 0, 4, 4, 2);
-        mainPane.add(printAllWarehouseShipmentsButton, 2, 6);
-        mainPane.add(closeButton, 3, 6);
-        primaryStage.setScene(new Scene(mainPane, 1000, 600));
-        primaryStage.show();
+        root.add(fileChooserButton, 0, 0);
+        root.add(warehouseLabel, 0, 1);
+        root.add(disableLabel,0,2);
+        root.add(addShipmentLabel,0,3);
+        root.add(exportLabel,0,4);
+        root.add(warehouseComboBox, 1, 1);
+        root.add(disableEnableFreightButton,1,2);
+        root.add(addShipmentButton,1,3);
+        root.add(exportToJsonButton,1,4);
+        root.add(textArea, 0, 5, 4, 2);
+        root.add(printAllWarehouseShipmentsButton, 2, 7);
+        root.add(closeButton, 3, 7);
+        window.setScene(new Scene(root, 1000, 600));
+        window.show();
 
         //Button handlers
         fileChooserButton.setOnAction(a -> {
-            // opens a dialogue box to choose a json file
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("JSON files", "*.json"),
                     new FileChooser.ExtensionFilter("All files", "*"));
-            File file = fileChooser.showOpenDialog(primaryStage);
-
-            if (primaryArea.getText().equals("")) {
-                primaryArea.setText(controller.processJsonInputFile(file));
-            } else {
-                primaryArea.setText(String.format("%s%n%s",
-                        primaryArea.getText(),
-                        controller.processJsonInputFile(file)));
-            }
-
-            if (warehouseComboBox.getItems().size() > 0) {
-                warehouseComboBox.getSelectionModel().clearSelection();
-                warehouseComboBox.getItems().clear();
-            }
-            warehouseComboBox.setItems(FXCollections.observableArrayList(controller.getWarehouseList()));
-            warehouseComboBox.getSelectionModel().selectFirst();
-
-            //enable the controls
-            warehouseComboBox.setDisable(false);
-            disableEnableFreightButton.setDisable(false);
-            exportToJsonButton.setDisable(false);
-            primaryArea.setScrollTop(Double.MAX_VALUE);
-        });
-
-        // shows the status of the selected warehouse freight receiving status
-        warehouseComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue v, Object o, Object n) -> {
-            if (warehouseComboBox.getValue() != null) {
-                Warehouse warehouse = controller
-                        .getWarehouseList()
-                        .stream()
-                        .filter(w -> w.getWarehouseId().equals(((Warehouse) warehouseComboBox.getValue()).getWarehouseId()))
-                        .findFirst()
-                        .get();
-
-                if (warehouse.isFreightReceiptEnabled())
-                    disableEnableFreightButton.setText("Disable Freight for Selected Warehouse");
+            File file = fileChooser.showOpenDialog(window);
+            if(file != null){
+                if(textArea.getText().equals(""))
+                    textArea.setText(controller.processJsonInputFile(file.getName()));
                 else
-                    disableEnableFreightButton.setText("Enable Freight for Selected Warehouse");
+                    textArea.setText(String.format("%s%n%s",
+                            textArea.getText(),
+                            controller.processJsonInputFile(file.getName())));
+
+                if (warehouseComboBox.getItems().size() > 0) {
+                    warehouseComboBox.getSelectionModel().clearSelection();
+                    warehouseComboBox.getItems().clear();
+                }
+                warehouseComboBox.setItems(FXCollections.observableArrayList(controller.getWarehouseList()));
+                warehouseComboBox.getSelectionModel().selectFirst();
+
+                //enable the controls
+                warehouseComboBox.setDisable(false);
+                disableEnableFreightButton.setDisable(false);
+                exportToJsonButton.setDisable(false);
+                addShipmentButton.setDisable(false);
+                textArea.setScrollTop(Double.MAX_VALUE);
             }
         });
 
-        // on json button click, open the JSON file and process it
-        exportToJsonButton.setOnAction(a -> {
+        warehouseComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue v, Object o, Object n) -> {
+              if (warehouseComboBox.getValue() != null) {
+                  Warehouse warehouse = controller
+                          .getWarehouseList()
+                          .stream()
+                          .filter(w -> w.getWarehouseId().equals(((Warehouse) warehouseComboBox.getValue()).getWarehouseId()))
+                          .findFirst()
+                          .get();
+
+                  if(warehouse.isFreightReceiptEnabled()){
+                      disableEnableFreightButton.setText("Disable");
+                      addShipmentButton.setDisable(false);
+                  }
+
+                  else{
+                      disableEnableFreightButton.setText("Enable");
+                      addShipmentButton.setDisable(true);
+                  }
+
+              }
+        });
+
+        exportToJsonButton.setOnAction(a->{
             String location = System.getProperty("user.dir");
             Alert alert = new Alert(Alert.AlertType.NONE);
-            String fileString = "";
-            if (Files.exists(Paths.get(location))) {
-                Warehouse warehouse = (Warehouse) warehouseComboBox.getValue();
-                try {
-                    fileString = MessageFormat.format("{0}/{1}_{2}.json",
-                            location,
-                            warehouse.getWarehouseId(),
-                            new Date().getTime());
-                    Files.write(Paths.get(fileString), warehouse.exportAllShipmentsToJsonString().getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            Warehouse warehouse = (Warehouse) warehouseComboBox.getValue();
+            String fileString = MessageFormat.format("{0}/{1}_{2}.json",
+                                                                location,
+                                                                warehouse.getWarehouseId(),
+                                                                new Date().getTime());
+            if (controller.exportToJson(location, fileString, new ShipmentsWrapper(warehouse.getShipments()))) {
                 alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setContentText(String.format("JSON file has been exported to %s has been generated for warehouse: %s", fileString, warehouse.getWarehouseId()));
-            } else {
+                alert.setContentText(String.format("JSON extract %s has been generated for warehouse: %s",fileString,warehouse.getWarehouseId()));
+            }
+            else{
                 alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setContentText(String.format("Cannot access location: %s", fileString));
+                alert.setContentText(String.format("Cannot access location: %s",fileString));
             }
             alert.show();
         });
 
-        // on disable freight button click, disable/enable incoming shipments to this warehouse
-        disableEnableFreightButton.setOnAction(a -> {
+        disableEnableFreightButton.setOnAction(a->{
             Warehouse warehouse = controller
                     .getWarehouseList()
                     .stream()
@@ -166,28 +174,40 @@ public class Main extends Application {
                     .findFirst()
                     .get();
 
-            if (warehouse.isFreightReceiptEnabled()) {
+            if(warehouse.isFreightReceiptEnabled()) {
                 warehouse.disableFreightReceipt();
-                disableEnableFreightButton.setText("Enable Freight for Selected Warehouse");
+                disableEnableFreightButton.setText("Enable");
+                addShipmentButton.setDisable(true);
             } else {
                 warehouse.enableFreightReceipt();
-                disableEnableFreightButton.setText("Disable Freight for Selected Warehouse");
+                disableEnableFreightButton.setText("Disable");
+                addShipmentButton.setDisable(false);
             }
         });
 
-        // on print all warehouse shipments button press, print all the warehouses to the user
         printAllWarehouseShipmentsButton.setOnAction(a -> {
-            primaryArea.setText(String.format("%s%n%s",
-                    primaryArea.getText(),
+            textArea.setText(String.format("%s%n%s",
+                    textArea.getText(),
                     controller.printAllWarehousesWithShipments()));
-            primaryArea.setScrollTop(Double.MAX_VALUE);
+            textArea.setScrollTop(Double.MAX_VALUE);
         });
 
-        // exit the program
-        closeButton.setOnAction(a -> {
-            primaryStage.close();
-            System.exit(0);
+        addShipmentButton.setOnAction(a -> {
+            Stage window = new AddShipmentForm((Warehouse)warehouseComboBox.getValue());
+            window.show();
         });
+
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+
+        closeButton.setOnAction(e -> closeProgram());
+    }
+
+    public void closeProgram(){
+        window.close();
+        System.exit(0);
     }
 
     public static void main(String[] args) {
