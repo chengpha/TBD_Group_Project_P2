@@ -1,4 +1,4 @@
-package sample;
+package ics372;
 
 import java.util.Collection;
 
