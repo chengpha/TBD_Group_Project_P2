@@ -1,4 +1,4 @@
-package sample;
+package ics372;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
