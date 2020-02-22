@@ -1,4 +1,4 @@
-package sample;
+package ics372;
 
 public class Shipment {
     private String warehouse_id;
