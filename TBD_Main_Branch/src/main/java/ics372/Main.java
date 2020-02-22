@@ -1,4 +1,4 @@
-package sample;
+package ics372;
 
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
