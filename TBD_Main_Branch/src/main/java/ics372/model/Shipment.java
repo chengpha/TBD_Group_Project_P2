@@ -1,6 +1,8 @@
-package ics372;
+package ics372.model;
 
-public class Shipment {
+import java.io.Serializable;
+
+public class Shipment implements Serializable {
     private String warehouse_id;
     private String shipment_id;
     private String shipment_method;

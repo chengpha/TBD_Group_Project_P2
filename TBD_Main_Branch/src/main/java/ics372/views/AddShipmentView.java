@@ -1,5 +1,7 @@
-package ics372;
+package ics372.views;
 
+import ics372.model.Shipment;
+import ics372.model.Warehouse;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -12,11 +14,11 @@ import javafx.geometry.Insets;
 /**
  * Allows to add a new shipment to a warehouse.
  */
-public class AddShipmentForm extends Stage {
+public class AddShipmentView extends Stage {
 
     Warehouse warehouse;
 
-    public AddShipmentForm(Warehouse warehouse){
+    public AddShipmentView(Warehouse warehouse){
         this.warehouse = warehouse;
         setTitle("Add Shipment for Warehouse " + warehouse.getWarehouseId());
         GridPane root = new GridPane();

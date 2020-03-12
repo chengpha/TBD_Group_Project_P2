@@ -1,4 +1,6 @@
-package ics372;
+package ics372.dto;
+
+import ics372.model.Shipment;
 
 import java.util.Collection;
 

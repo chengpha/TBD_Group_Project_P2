@@ -1,13 +1,26 @@
-package ics372;
+package ics372.controllers;
+
+import ics372.model.Shipment;
+import ics372.dto.ShipmentsWrapper;
+import ics372.model.Warehouse;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * MainController provides the main features and functionality of the application.
+ */
+public class MainController {
+    private List<Warehouse> warehouseList;
+    private DataController data;
+    private GsonController gson;
 
-public class Controller {
-    private List<Warehouse> warehouseList = new ArrayList<>();
-    public Controller(){}
+    public MainController(){
+        data = new DataController();
+        gson = new GsonController();
+        this.warehouseList = retrieveCurrentState();
+    }
 
     public List<Warehouse>  getWarehouseList(){ return warehouseList;}
 
@@ -15,7 +28,7 @@ public class Controller {
         Collection<Shipment> shipmentList = new ArrayList<>();
         String msg = "";
 
-        shipmentList.addAll(Utility.processJsonInputFile(file));
+        shipmentList.addAll(gson.processJsonInputFile(file));
 
         /*
         create warehouses if they do not exist; add shipments to warehouses;
@@ -56,13 +69,22 @@ public class Controller {
     }
 
     public boolean exportToJson(String location, String fileString, Object o){
-        return Utility.exportShipmentsToJsonFile(location, fileString, o);
+        return gson.exportShipmentsToJsonFile(location, fileString, o);
+    }
+
+    //save the current state of application
+    public void saveCurrentState(){
+        data.saveCurrentState(warehouseList, System.getProperty("user.dir") + "/data/");
+    }
+    //retrieve the current state of application
+    public List<Warehouse> retrieveCurrentState(){
+        return data.retrieveCurrentState(System.getProperty("user.dir")+"/data/");
     }
 
     public String printAllWarehousesWithShipments(){
         String msg = String.format("SHIPMENTS FOR ALL WAREHOUSES:%n");
         for (Warehouse w : warehouseList){
-            String[] shipments = Utility.exportShipmentsToJsonString(new ShipmentsWrapper(w.getShipments())).split("},");
+            String[] shipments = gson.exportShipmentsToJsonString(new ShipmentsWrapper(w.getShipments())).split("},");
             String temp = "";
             for(int i = 0; i<shipments.length; i++)
                 temp += String.format("%s%n\t\t\t\t\t\t\t\t  ", shipments[i] + (i < shipments.length - 1 ? "}," : ""));

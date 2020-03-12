@@ -1,11 +1,14 @@
-package ics372;
+package ics372.model;
 
+import ics372.model.Shipment;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Warehouse {
+public class Warehouse implements Serializable {
     private String warehouse_id;
-    private Collection<Shipment> shipments = new ArrayList<>();
+    private Collection<Shipment> shipments = new ArrayList<Shipment>();
     boolean freightReceiptEnable = true;
 
     public Warehouse(String warehouse_id){
