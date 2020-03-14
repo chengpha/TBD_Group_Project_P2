@@ -1,7 +1,4 @@
 package ics372.model;
-
-import ics372.model.Shipment;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;

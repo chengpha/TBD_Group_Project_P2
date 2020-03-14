@@ -3,6 +3,8 @@ package ics372.controllers;
 import ics372.model.Shipment;
 import ics372.dto.ShipmentsWrapper;
 import ics372.model.Warehouse;
+import ics372.services.DataService;
+import ics372.services.GsonService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,12 +15,12 @@ import java.util.List;
  */
 public class MainController {
     private List<Warehouse> warehouseList;
-    private DataController data;
-    private GsonController gson;
+    private DataService data;
+    private GsonService gson;
 
     public MainController(){
-        data = new DataController();
-        gson = new GsonController();
+        data = new DataService();
+        gson = new GsonService();
         this.warehouseList = retrieveCurrentState();
     }
 

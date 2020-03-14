@@ -1,7 +1,6 @@
-package ics372.controllers;
+package ics372.services;
 
 import ics372.model.Warehouse;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.List;
  * Data class performs data persistence on the load/exit application events.
  */
 
-public class DataController {
+public class DataService {
     //save the current state of application
     public void saveCurrentState(List<Warehouse> warehouseList, String filePath){
         try {

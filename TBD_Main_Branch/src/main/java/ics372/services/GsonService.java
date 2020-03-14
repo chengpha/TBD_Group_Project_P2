@@ -1,9 +1,8 @@
-package ics372.controllers;
+package ics372.services;
 
 import com.google.gson.Gson;
 import ics372.model.Shipment;
 import ics372.dto.ShipmentsWrapper;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,7 +13,7 @@ import java.util.Collection;
 /**
  * Gson controller implements Gson library to perform JSON read/write file operations across the application.
  */
-public class GsonController {
+public class GsonService {
     public Collection<Shipment>  processJsonInputFile(String file) {
         Collection<Shipment> list = new ArrayList<Shipment>();
 
