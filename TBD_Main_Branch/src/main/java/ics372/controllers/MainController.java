@@ -14,13 +14,14 @@ import java.util.List;
  * MainController provides the main features and functionality of the application.
  */
 public class MainController {
+    private final String dataDirectory = System.getProperty("user.dir")+"/data/";
     private List<Warehouse> warehouseList;
     private DataService data;
     private GsonService gson;
 
-    public MainController(){
-        data = new DataService();
-        gson = new GsonService();
+    public MainController(DataService dataService, GsonService gsonService){
+        data = dataService;
+        gson = gsonService;
         this.warehouseList = retrieveCurrentState();
     }
 
@@ -32,10 +33,11 @@ public class MainController {
 
         shipmentList.addAll(gson.processJsonInputFile(file));
 
-        /*
-        create warehouses if they do not exist; add shipments to warehouses;
-        duplicate shipments are not allowed;
-        */
+
+        /**
+         *  Create warehouses if they do not exist; add shipments to warehouses;
+         *  Duplicate shipments are not allowed;
+         */
         for (Shipment s : shipmentList) {
             Warehouse warehouse;
             if (warehouseList.stream().noneMatch(w -> w.getWarehouseId().equals(s.getWarehouseId()))) {
@@ -48,7 +50,9 @@ public class MainController {
                         .findFirst()
                         .get();
 
-            //if the freight receipt in the warehouse is disabled, do not add any shipments
+            /**
+             * if the freight receipt in the warehouse is disabled, do not add any shipments
+             */
             if(!warehouse.isFreightReceiptEnabled()){
                 msg += String.format("Freight receipt is disabled for warehouse %s.Shipment %s won't be added.%n",
                                         warehouse.getWarehouseId(),
@@ -74,13 +78,19 @@ public class MainController {
         return gson.exportShipmentsToJsonFile(location, fileString, o);
     }
 
-    //save the current state of application
-    public void saveCurrentState(){
-        data.saveCurrentState(warehouseList, System.getProperty("user.dir") + "/data/");
+    /**
+     * save the current state of application
+     */
+    public void saveCurrentState() {
+        data.saveCurrentState(warehouseList, dataDirectory);
     }
-    //retrieve the current state of application
+
+    /**
+     * retrieve the current state of application
+     * @return
+     */
     public List<Warehouse> retrieveCurrentState(){
-        return data.retrieveCurrentState(System.getProperty("user.dir")+"/data/");
+        return data.retrieveCurrentState(dataDirectory);
     }
 
     public String printAllWarehousesWithShipments(){

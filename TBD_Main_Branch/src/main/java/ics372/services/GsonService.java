@@ -15,8 +15,7 @@ import java.util.Collection;
  */
 public class GsonService {
     public Collection<Shipment>  processJsonInputFile(String file) {
-        Collection<Shipment> list = new ArrayList<Shipment>();
-
+        Collection<Shipment> list = new ArrayList<>();
         try (Reader reader = new FileReader(file)) {
             list = new Gson().fromJson(reader, ShipmentsWrapper.class).getShipmentList();
         } catch (FileNotFoundException e) {

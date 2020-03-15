@@ -5,12 +5,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Data class performs data persistence on the load/exit application events.
- */
 
 public class DataService {
-    //save the current state of application
+    /**
+     * save the current state of application
+     * @param warehouseList
+     * @param filePath
+     */
     public void saveCurrentState(List<Warehouse> warehouseList, String filePath){
         try {
             for(Warehouse w : warehouseList) {
@@ -24,13 +25,18 @@ public class DataService {
             e.printStackTrace();
         }
     }
-    //retrieve the current state of application
+
+    /**
+     * retrieve the current state of application
+     * @param filePath
+     * @return
+     */
     public List<Warehouse> retrieveCurrentState(String filePath){
         List<Warehouse> warehouseList = new ArrayList<>();
         try {
             File[] files = new File(filePath).listFiles();
             for (File file : files) {
-                //Mac computers contains .DS_Store files in the newly created directories that may cause problems
+                //Mac computers contain .DS_Store files in the newly created directories that may cause problems
                 if(file.getName().contains(".DS_Store")) continue;
 
                 FileInputStream fileInput = new FileInputStream(file.getAbsoluteFile());

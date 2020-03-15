@@ -3,6 +3,8 @@ package ics372.views;
 import ics372.dto.ShipmentsWrapper;
 import ics372.model.Warehouse;
 import ics372.controllers.MainController;
+import ics372.services.DataService;
+import ics372.services.GsonService;
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -25,7 +27,7 @@ import java.util.Date;
 public class Main extends Application {
 
     Stage window;
-    MainController controller = new MainController();
+    MainController controller = new MainController(new DataService(), new GsonService());
     ComboBox warehouseComboBox;
     Button addShipmentButton;
     Button disableEnableFreightButton;
@@ -98,7 +100,7 @@ public class Main extends Application {
         window.show();
         onLoad();
 
-        //Button handlers
+        //button handlers
         fileChooserButton.setOnAction(a -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(
