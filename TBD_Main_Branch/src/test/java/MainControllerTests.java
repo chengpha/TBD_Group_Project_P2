@@ -37,7 +37,7 @@ public class MainControllerTests {
     @BeforeEach
     public void init() {
         /**
-         * The files in the data directory have to be removed prior to running the test.
+         * The files in the data directory must be removed prior to running the tests.
          * Otherwise they might interfere with other tests.
          */
         dataDirectory = System.getProperty("user.dir") + "/data/";

@@ -20,7 +20,7 @@ public class DataTests {
     @BeforeEach
     public void initDataService() {
         /**
-         * The files in the data directory have to be removed prior to running the test.
+         * The files in the data directory must be removed prior to performing the tests.
          * Otherwise they might interfere with other tests.
          */
         directoryPath = System.getProperty("user.dir") + "/data/";
@@ -40,7 +40,7 @@ public class DataTests {
     }
 
     /**
-     *   Test the ability of the DataService to save and retrieve the warehouse data
+     *   Test the ability of DataService to save and retrieve the warehouse data
      */
     @Test
     public void saveAndRetrieveCurrentState_Test() {
@@ -51,15 +51,13 @@ public class DataTests {
         List<Warehouse> stu = dataService.retrieveCurrentState(directoryPath);
         List<String> wareHouseIds = new ArrayList<>();
         warehouseList.forEach(w -> wareHouseIds.add(w.getWarehouseId()));
-
-
         /**
          *  Assert the results
          */
         assertNotNull(stu);
         assertEquals(warehouseList.size(),stu.size());
         /**
-         *  check if all the warehouses exists in the array
+         *  check if all the warehouses exist in the array
          */
         assertTrue(wareHouseIds.contains(stu.get(0).getWarehouseId()));
         assertTrue(wareHouseIds.contains(stu.get(1).getWarehouseId()));
