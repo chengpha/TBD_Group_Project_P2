@@ -1,5 +1,10 @@
-package ics372;
+package ics372.views;
 
+import ics372.dto.ShipmentsWrapper;
+import ics372.model.Warehouse;
+import ics372.controllers.MainController;
+import ics372.services.DataService;
+import ics372.services.GsonService;
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,11 +27,14 @@ import java.util.Date;
 public class Main extends Application {
 
     Stage window;
+    MainController controller = new MainController(new DataService(), new GsonService());
+    ComboBox warehouseComboBox;
+    Button addShipmentButton;
+    Button disableEnableFreightButton;
 
     @Override
     public void start(Stage primaryStage) {
         window = primaryStage;
-        Controller controller = new Controller();
         window.setTitle("GroupProject1");
         GridPane root = new GridPane();
         root.setHgap(10);
@@ -58,19 +66,16 @@ public class Main extends Application {
         Button fileChooserButton = new Button("Choose File");
         Button printAllWarehouseShipmentsButton = new Button("Display All Shipments");
         Button closeButton = new Button("Close");
-        Button disableEnableFreightButton = new Button("Disable");
-        disableEnableFreightButton.setDisable(true);
-        Button addShipmentButton = new Button("Add");
-        addShipmentButton.setDisable(true);
         Button exportToJsonButton = new Button("Export All");
-        exportToJsonButton.setDisable(true);
-        //combo box
-        ComboBox warehouseComboBox = new ComboBox();
-        warehouseComboBox.setDisable(true);
+        disableEnableFreightButton = new Button("Disable");
+        addShipmentButton = new Button("Add");
+        warehouseComboBox = new ComboBox();
+
         //text area
         TextArea textArea = new TextArea();
         textArea.setEditable(false);
         textArea.setScrollTop(Double.MAX_VALUE);
+
         //labels
         Label warehouseLabel = new Label("Select Warehouse: ");
         Label disableLabel = new Label("Disable/Enable Freight: ");
@@ -93,8 +98,9 @@ public class Main extends Application {
         root.add(closeButton, 3, 7);
         window.setScene(new Scene(root, 1000, 600));
         window.show();
+        onLoad();
 
-        //Button handlers
+        //button handlers
         fileChooserButton.setOnAction(a -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(
@@ -102,20 +108,8 @@ public class Main extends Application {
                     new FileChooser.ExtensionFilter("All files", "*"));
             File file = fileChooser.showOpenDialog(window);
             if(file != null){
-                textArea.setText(controller.processJsonInputFile(file.getName()));
-
-                if (warehouseComboBox.getItems().size() > 0) {
-                    warehouseComboBox.getSelectionModel().clearSelection();
-                    warehouseComboBox.getItems().clear();
-                }
-                warehouseComboBox.setItems(FXCollections.observableArrayList(controller.getWarehouseList()));
-                warehouseComboBox.getSelectionModel().selectFirst();
-
-                //enable the controls
-                warehouseComboBox.setDisable(false);
-                disableEnableFreightButton.setDisable(false);
-                exportToJsonButton.setDisable(false);
-                addShipmentButton.setDisable(false);
+                textArea.setText(controller.processJsonInputFile(file.getAbsolutePath()));
+                onLoad();
                 textArea.setScrollTop(Double.MAX_VALUE);
             }
         });
@@ -129,20 +123,13 @@ public class Main extends Application {
                           .findFirst()
                           .get();
 
-                  if(warehouse.isFreightReceiptEnabled()){
-                      disableEnableFreightButton.setText("Disable");
-                      addShipmentButton.setDisable(false);
-                  }
-
-                  else{
-                      disableEnableFreightButton.setText("Enable");
-                      addShipmentButton.setDisable(true);
-                  }
-
+                  enableDisableControlsOnFreightReceiptChange(warehouse);
               }
         });
 
         exportToJsonButton.setOnAction(a->{
+            if(controller.getWarehouseList().isEmpty())
+                return;
             String location = System.getProperty("user.dir");
             Alert alert = new Alert(Alert.AlertType.NONE);
             Warehouse warehouse = (Warehouse) warehouseComboBox.getValue();
@@ -154,7 +141,7 @@ public class Main extends Application {
                 alert.setAlertType(Alert.AlertType.INFORMATION);
                 alert.setContentText(String.format("JSON extract %s has been generated for warehouse: %s",fileString,warehouse.getWarehouseId()));
             }
-            else{
+            else {
                 alert.setAlertType(Alert.AlertType.ERROR);
                 alert.setContentText(String.format("Cannot access location: %s",fileString));
             }
@@ -162,6 +149,9 @@ public class Main extends Application {
         });
 
         disableEnableFreightButton.setOnAction(a->{
+            if(controller.getWarehouseList().isEmpty())
+                return;
+
             Warehouse warehouse = controller
                     .getWarehouseList()
                     .stream()
@@ -169,15 +159,12 @@ public class Main extends Application {
                     .findFirst()
                     .get();
 
-            if(warehouse.isFreightReceiptEnabled()) {
+            if(warehouse.isFreightReceiptEnabled())
                 warehouse.disableFreightReceipt();
-                disableEnableFreightButton.setText("Enable");
-                addShipmentButton.setDisable(true);
-            } else {
+            else
                 warehouse.enableFreightReceipt();
-                disableEnableFreightButton.setText("Disable");
-                addShipmentButton.setDisable(false);
-            }
+
+            enableDisableControlsOnFreightReceiptChange(warehouse);
         });
 
         printAllWarehouseShipmentsButton.setOnAction(a -> {
@@ -186,7 +173,9 @@ public class Main extends Application {
         });
 
         addShipmentButton.setOnAction(a -> {
-            Stage window = new AddShipmentForm((Warehouse)warehouseComboBox.getValue());
+            if(controller.getWarehouseList().isEmpty())
+                return;
+            Stage window = new AddShipmentView((Warehouse)warehouseComboBox.getValue());
             window.show();
         });
 
@@ -197,9 +186,28 @@ public class Main extends Application {
 
         closeButton.setOnAction(e -> closeProgram());
     }
+    public void onLoad(){
+        if(controller.getWarehouseList().size() > 0){
+            warehouseComboBox.setItems(FXCollections.observableArrayList(controller.getWarehouseList()));
+            warehouseComboBox.getSelectionModel().selectFirst();
+            enableDisableControlsOnFreightReceiptChange((Warehouse)warehouseComboBox.getValue());
+        }
+    }
+
+    public void enableDisableControlsOnFreightReceiptChange(Warehouse w){
+        if(w.isFreightReceiptEnabled()){
+            disableEnableFreightButton.setText("Disable");
+            addShipmentButton.setDisable(false);
+        }
+        else{
+            disableEnableFreightButton.setText("Enable");
+            addShipmentButton.setDisable(true);
+        }
+    }
 
     public void closeProgram(){
         window.close();
+        controller.saveCurrentState();
         System.exit(0);
     }
 

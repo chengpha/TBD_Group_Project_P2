@@ -1,5 +1,7 @@
-package ics372;
+package ics372.views;
 
+import ics372.model.Shipment;
+import ics372.model.Warehouse;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -9,14 +11,16 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 
+import java.util.stream.Stream;
+
 /**
  * Allows to add a new shipment to a warehouse.
  */
-public class AddShipmentForm extends Stage {
+public class AddShipmentView extends Stage {
 
     Warehouse warehouse;
 
-    public AddShipmentForm(Warehouse warehouse){
+    public AddShipmentView(Warehouse warehouse){
         this.warehouse = warehouse;
         setTitle("Add Shipment for Warehouse " + warehouse.getWarehouseId());
         GridPane root = new GridPane();
@@ -84,6 +88,16 @@ public class AddShipmentForm extends Stage {
                 receiptDate = Long.parseLong(receiptDateText.getText());
             } catch(NumberFormatException e){
                 alert.setContentText("'receipt_date' must be a numeric value");
+                alert.show();
+                return;
+            }
+            /**
+             * verify the right shipment method
+             */
+            if (Stream.of("AIR", "RAIL", "SHIP", "TRUCK")
+                    .noneMatch(s -> shipmentMethodText.getText().toUpperCase().trim().equals(s))
+            ) {
+                alert.setContentText("'shipment_method' must be AIR, RAIL, SHIP, or TRUCK");
                 alert.show();
                 return;
             }
