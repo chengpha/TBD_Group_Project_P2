@@ -37,7 +37,7 @@ public class Main extends Application {
          * 'data' directory is needed to save the state of the program
          */
         verifyDataDirectoryExists();
-        controller= new MainController(new DataService(), new GsonService());
+        controller = new MainController(new DataService(), new GsonService());
         window = primaryStage;
         window.setTitle("GroupProject1");
         GridPane root = new GridPane();
