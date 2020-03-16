@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataTests {
+public class DataServiceTests {
 
     private DataService dataService;
     private String directoryPath;
