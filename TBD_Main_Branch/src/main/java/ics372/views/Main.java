@@ -23,17 +23,21 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.Date;
 
-
 public class Main extends Application {
 
     Stage window;
-    MainController controller = new MainController(new DataService(), new GsonService());
+    MainController controller;
     ComboBox warehouseComboBox;
     Button addShipmentButton;
     Button disableEnableFreightButton;
 
     @Override
     public void start(Stage primaryStage) {
+        /**
+         * 'data' directory is needed to save the state of the program
+         */
+        verifyDataDirectoryExists();
+        controller= new MainController(new DataService(), new GsonService());
         window = primaryStage;
         window.setTitle("GroupProject1");
         GridPane root = new GridPane();
@@ -186,6 +190,13 @@ public class Main extends Application {
 
         closeButton.setOnAction(e -> closeProgram());
     }
+
+    private void verifyDataDirectoryExists() {
+        File dataDirectory = new File(System.getProperty("user.dir")+"/data/");
+        if(!dataDirectory.exists())
+            dataDirectory.mkdir();
+    }
+
     public void onLoad(){
         if(controller.getWarehouseList().size() > 0){
             warehouseComboBox.setItems(FXCollections.observableArrayList(controller.getWarehouseList()));
