@@ -18,7 +18,7 @@ public class DataServiceTests {
     private List<Warehouse> warehouseList;
 
     @BeforeEach
-    public void initDataService() {
+    public void initDataServiceTest() {
         /**
          * The files in the data directory must be removed prior to performing the tests.
          * Otherwise they might interfere with other tests.

@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -63,7 +62,7 @@ public class MainControllerTests {
      */
 
     @Test
-    public void CreateWarehousesWithShipments_Test(){
+    public void createWarehousesWithShipments_Test(){
         /**
          * Act
          */
@@ -123,7 +122,9 @@ public class MainControllerTests {
                 .thenReturn(String.format("Warehouse ID - %s:", w.getWarehouseId())));
 
          String msg = mainController.printAllWarehousesWithShipments();
-
+        /**
+         * Assert
+         */
          assertTrue(msg.contains("Warehouse ID - 1111:"));
          assertTrue(msg.contains("Warehouse ID - 2222:"));
          verify(gsonService, times(2)).exportShipmentsToJsonString(any(ShipmentsWrapper.class));
