@@ -5,7 +5,15 @@ import ics372.dto.ShipmentsWrapper;
 import ics372.model.Warehouse;
 import ics372.services.DataService;
 import ics372.services.GsonService;
+import org.apache.commons.io.FilenameUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,11 +35,52 @@ public class MainController {
 
     public List<Warehouse>  getWarehouseList(){ return warehouseList;}
 
-    public String processJsonInputFile(String file){
+    public String processInputFile(String file){
         Collection<Shipment> shipmentList = new ArrayList<>();
         String msg = "";
 
-        shipmentList.addAll(gson.processJsonInputFile(file));
+        File f = new File(file);
+        String ext = FilenameUtils.getExtension(f.getName());
+
+        // checks if the file has the xml ending, if it does parse it, otherwise assume its a json file
+        if(ext.equals("xml")) {
+            try {
+                // turns the xml into usable data docs
+                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                Document doc = dBuilder.parse(f);
+                doc.getDocumentElement().normalize();
+
+                // Gets all the shipment lists and puts them into a nodelist
+                NodeList shipmentNodeList = doc.getElementsByTagName("Shipment");
+
+                // Loop through each shipment in the nodelist
+                for (int index = 0; index < shipmentNodeList.getLength(); index++) {
+                    Node shipment = shipmentNodeList.item(index);
+
+                    if (shipment.getNodeType() == Node.ELEMENT_NODE) {
+                        Element eElement = (Element) shipment;
+
+                        // Gets all the values needed
+                        String warehouseID = ((Element) (shipment.getParentNode())).getAttribute("id"); // checks the shipment node parent, aka warehouse, and finds its ID
+                        String shipmentID =  eElement.getAttribute("id"); // grabs the id attribute
+                        String shipmentMethod = eElement.getAttribute("type"); // grabs the type attribute, aka air, rail, truck, etc.
+                        Double weight = Double.parseDouble(doc.getElementsByTagName("Weight").item(index).getTextContent()); // gets the weight by index
+                        Long receiptDate = Long.parseLong(doc.getElementsByTagName("ReceiptDate").item(index).getTextContent()); // gets the receipt date by index
+
+                        // Creates a shipment and adds it to the list
+                        Shipment s = new Shipment(warehouseID, shipmentID, shipmentMethod, weight, receiptDate);
+                        shipmentList.add(s);
+                    }
+                }
+
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            shipmentList.addAll(gson.processInputFile(file));
+        }
 
 
         /**

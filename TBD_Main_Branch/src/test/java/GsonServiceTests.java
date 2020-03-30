@@ -28,7 +28,7 @@ public class GsonServiceTests {
     }
 
     @Test
-    public void processJsonInputFile_Test(){
+    public void processInputFile_Test(){
         /**
          * Act
          */
@@ -61,7 +61,7 @@ public class GsonServiceTests {
             add("11111");
             add("22222");
         }};
-        shipments = (List<Shipment>) stu.processJsonInputFile(file);
+        shipments = (List<Shipment>) stu.processInputFile(file);
         shipments.forEach(s -> shipmentIds.add(s.getShipmentId()));
 
         /**
