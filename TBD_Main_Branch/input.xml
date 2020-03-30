@@ -1,0 +1,38 @@
+<Shipments>
+	<Warehouse id="485" name="Warehouse 120"> 
+		<Shipment type="Air" id="15dde">
+			<Weight unit="kg">20.6</Weight>
+			<ReceiptDate>1732239329</ReceiptDate>
+		</Shipment>
+		<Shipment type="Truck" id="52523">
+			<Weight unit="kg">73</Weight>
+			<ReceiptDate>1732239329</ReceiptDate>
+		</Shipment>
+		<Shipment type="Ship" id="151e5dde">
+			<Weight unit="lb">802</Weight>
+			<ReceiptDate>1732299329</ReceiptDate>
+		</Shipment>
+		<Shipment type="Rail" id="ern222">
+			<Weight unit="lb">291</Weight>
+			<ReceiptDate>1732279329</ReceiptDate>
+		</Shipment>
+	</Warehouse>
+		<Warehouse id="486" name="Warehouse 120"> 
+		<Shipment type="Air" id="15dde">
+			<Weight unit="kg">1000</Weight>
+			<ReceiptDate>1000</ReceiptDate>
+		</Shipment>
+		<Shipment type="Truck" id="52523">
+			<Weight unit="kg">1000</Weight>
+			<ReceiptDate>1000</ReceiptDate>
+		</Shipment>
+		<Shipment type="Ship" id="151e5dde">
+			<Weight unit="lb">1000</Weight>
+			<ReceiptDate>1000</ReceiptDate>
+		</Shipment>
+		<Shipment type="Rail" id="ern222">
+			<Weight unit="lb">1000</Weight>
+			<ReceiptDate>1000</ReceiptDate>
+		</Shipment>
+	</Warehouse>
+</Shipments>

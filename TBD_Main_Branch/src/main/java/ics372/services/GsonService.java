@@ -14,7 +14,7 @@ import java.util.Collection;
  * Gson controller implements Gson library to perform JSON read/write file operations across the application.
  */
 public class GsonService {
-    public Collection<Shipment>  processJsonInputFile(String file) {
+    public Collection<Shipment>  processInputFile(String file) {
         Collection<Shipment> list = new ArrayList<>();
         try (Reader reader = new FileReader(file)) {
             list = new Gson().fromJson(reader, ShipmentsWrapper.class).getShipmentList();

@@ -108,11 +108,11 @@ public class Main extends Application {
         fileChooserButton.setOnAction(a -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("JSON files", "*.json"),
+                    new FileChooser.ExtensionFilter("Compatible files", "*.json", "*.xml"),
                     new FileChooser.ExtensionFilter("All files", "*"));
             File file = fileChooser.showOpenDialog(window);
             if(file != null){
-                textArea.setText(controller.processJsonInputFile(file.getAbsolutePath()));
+                textArea.setText(controller.processInputFile(file.getAbsolutePath()));
                 onLoad();
                 textArea.setScrollTop(Double.MAX_VALUE);
             }

@@ -54,7 +54,7 @@ public class MainControllerTests {
             add(shipment1);
             add(shipment2);
         }};
-        Mockito.lenient().when(gsonService.processJsonInputFile(any(String.class))).thenReturn(shipments);
+        Mockito.lenient().when(gsonService.processInputFile(any(String.class))).thenReturn(shipments);
     }
 
     /**
@@ -67,7 +67,7 @@ public class MainControllerTests {
          * Act
          */
         MainController mainController = new MainController(dataService, gsonService);
-        mainController.processJsonInputFile("");
+        mainController.processInputFile("");
         for (Warehouse w : mainController.getWarehouseList()) {
             if(w.getWarehouseId().endsWith("1111"))
                 warehouse1 = w;
@@ -106,7 +106,7 @@ public class MainControllerTests {
                 }
         );
 
-        verify(gsonService, times(1)).processJsonInputFile("");
+        verify(gsonService, times(1)).processInputFile("");
     }
 
     @Test
@@ -115,7 +115,7 @@ public class MainControllerTests {
          * Act
          */
          MainController mainController = new MainController(dataService, gsonService);
-         mainController.processJsonInputFile("");
+         mainController.processInputFile("");
 
         mainController.getWarehouseList()
                 .forEach(w ->  Mockito.lenient().when(gsonService.exportShipmentsToJsonString(any(ShipmentsWrapper.class)))
