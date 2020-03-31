@@ -23,8 +23,8 @@ public class GsonServiceTests {
     public void initGsonServiceTests(){
         stu = new GsonService();
         shipments = new ArrayList<>();
-        shipments.add(new Shipment("1111", "id_1111","air", 87, 134234234232L));
-        shipments.add(new Shipment("2222", "id_2222", "truck", 87, 1231231123123L));
+        shipments.add(new Shipment("1111", "Warehouse 120", "id_1111","air", 87, 134234234232L));
+        shipments.add(new Shipment("2222", "Warehouse 121", "id_2222", "truck", 87, 1231231123123L));
     }
 
     @Test

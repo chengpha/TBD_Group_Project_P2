@@ -75,8 +75,8 @@ public class AddShipmentView extends Stage {
                 alert.show();
                 return;
             }
-            double weight = 0;
-            long receiptDate = 0;
+            double weight;
+            long receiptDate;
             try{
                 weight = Double.parseDouble(weightText.getText());
             }catch(NumberFormatException e){
@@ -102,6 +102,7 @@ public class AddShipmentView extends Stage {
                 return;
             }
             Shipment shipment = new Shipment(warehouse.getWarehouseId(),
+                    warehouse.getWarehouseName(),
                     shipmentIdText.getText(),
                     shipmentMethodText.getText(),
                     weight,

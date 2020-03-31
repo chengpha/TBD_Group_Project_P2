@@ -4,6 +4,7 @@ import ics372.model.Shipment;
 import ics372.model.Warehouse;
 import ics372.services.DataService;
 import ics372.services.GsonService;
+import ics372.services.XmlService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -27,7 +28,10 @@ public class MainControllerTests {
     @Mock
     GsonService gsonService;
     @Mock
+    XmlService xmlService;
+    @Mock
     DataService dataService;
+
 
     private String dataDirectory;
     private Warehouse warehouse1 = null;
@@ -48,8 +52,8 @@ public class MainControllerTests {
         /**
          * Arrange
          */
-        Shipment shipment1 = new Shipment("1111", "id_1111","air", 87, 134234234232L);
-        Shipment shipment2 = new Shipment("2222", "id_2222", "truck", 87, 1231231123123L);
+        Shipment shipment1 = new Shipment("1111", "Warehouse 120", "id_1111","air", 87, 134234234232L);
+        Shipment shipment2 = new Shipment("2222", "Warehouse 121", "id_2222", "truck", 87, 1231231123123L);
         List<Shipment> shipments = new ArrayList<Shipment>(){{
             add(shipment1);
             add(shipment2);
@@ -66,7 +70,7 @@ public class MainControllerTests {
         /**
          * Act
          */
-        MainController mainController = new MainController(dataService, gsonService);
+        MainController mainController = new MainController(dataService, gsonService, xmlService);
         mainController.processInputFile("");
         for (Warehouse w : mainController.getWarehouseList()) {
             if(w.getWarehouseId().endsWith("1111"))
@@ -114,7 +118,7 @@ public class MainControllerTests {
         /**
          * Act
          */
-         MainController mainController = new MainController(dataService, gsonService);
+         MainController mainController = new MainController(dataService, gsonService, xmlService);
          mainController.processInputFile("");
 
         mainController.getWarehouseList()

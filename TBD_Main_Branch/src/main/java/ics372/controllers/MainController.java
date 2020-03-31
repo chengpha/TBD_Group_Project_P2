@@ -5,14 +5,8 @@ import ics372.dto.ShipmentsWrapper;
 import ics372.model.Warehouse;
 import ics372.services.DataService;
 import ics372.services.GsonService;
+import ics372.services.XmlService;
 import org.apache.commons.io.FilenameUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,12 +18,14 @@ import java.util.List;
 public class MainController {
     private final String dataDirectory = System.getProperty("user.dir")+"/data/";
     private List<Warehouse> warehouseList;
-    private DataService data;
-    private GsonService gson;
+    private DataService dataService;
+    private GsonService gsonService;
+    private XmlService xmlService;
 
-    public MainController(DataService dataService, GsonService gsonService){
-        data = dataService;
-        gson = gsonService;
+    public MainController(DataService dataService, GsonService gsonService, XmlService xmlService){
+        this.dataService = dataService;
+        this.gsonService = gsonService;
+        this.xmlService = xmlService;
         this.warehouseList = retrieveCurrentState();
     }
 
@@ -42,46 +38,14 @@ public class MainController {
         File f = new File(file);
         String ext = FilenameUtils.getExtension(f.getName());
 
-        // checks if the file has the xml ending, if it does parse it, otherwise assume its a json file
+        /**
+         * checks if the file has the xml ending, if it does parse it, otherwise assume its a json file
+         */
         if(ext.equals("xml")) {
-            try {
-                // turns the xml into usable data docs
-                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                Document doc = dBuilder.parse(f);
-                doc.getDocumentElement().normalize();
-
-                // Gets all the shipment lists and puts them into a nodelist
-                NodeList shipmentNodeList = doc.getElementsByTagName("Shipment");
-
-                // Loop through each shipment in the nodelist
-                for (int index = 0; index < shipmentNodeList.getLength(); index++) {
-                    Node shipment = shipmentNodeList.item(index);
-
-                    if (shipment.getNodeType() == Node.ELEMENT_NODE) {
-                        Element eElement = (Element) shipment;
-
-                        // Gets all the values needed
-                        String warehouseID = ((Element) (shipment.getParentNode())).getAttribute("id"); // checks the shipment node parent, aka warehouse, and finds its ID
-                        String shipmentID =  eElement.getAttribute("id"); // grabs the id attribute
-                        String shipmentMethod = eElement.getAttribute("type"); // grabs the type attribute, aka air, rail, truck, etc.
-                        Double weight = Double.parseDouble(doc.getElementsByTagName("Weight").item(index).getTextContent()); // gets the weight by index
-                        Long receiptDate = Long.parseLong(doc.getElementsByTagName("ReceiptDate").item(index).getTextContent()); // gets the receipt date by index
-
-                        // Creates a shipment and adds it to the list
-                        Shipment s = new Shipment(warehouseID, shipmentID, shipmentMethod, weight, receiptDate);
-                        shipmentList.add(s);
-                    }
-                }
-
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-
+           shipmentList.addAll(xmlService.processInputFile(file));
         } else {
-            shipmentList.addAll(gson.processInputFile(file));
+            shipmentList.addAll(gsonService.processInputFile(file));
         }
-
 
         /**
          *  Create warehouses if they do not exist; add shipments to warehouses;
@@ -90,7 +54,7 @@ public class MainController {
         for (Shipment s : shipmentList) {
             Warehouse warehouse;
             if (warehouseList.stream().noneMatch(w -> w.getWarehouseId().equals(s.getWarehouseId()))) {
-                warehouse = new Warehouse(s.getWarehouseId());
+                warehouse = new Warehouse(s.getWarehouseId(), s.getWarehouseName());
                 warehouseList.add(warehouse);
             } else
                 warehouse = warehouseList
@@ -124,14 +88,14 @@ public class MainController {
     }
 
     public boolean exportToJson(String location, String fileString, Object o){
-        return gson.exportShipmentsToJsonFile(location, fileString, o);
+        return gsonService.exportShipmentsToJsonFile(location, fileString, o);
     }
 
     /**
      * save the current state of application
      */
     public void saveCurrentState() {
-        data.saveCurrentState(warehouseList, dataDirectory);
+        dataService.saveCurrentState(warehouseList, dataDirectory);
     }
 
     /**
@@ -139,18 +103,26 @@ public class MainController {
      * @return
      */
     public List<Warehouse> retrieveCurrentState(){
-        return data.retrieveCurrentState(dataDirectory);
+        return dataService.retrieveCurrentState(dataDirectory);
+    }
+
+    public String printShipmentsForWarehouse(Warehouse w){
+        return String.format("SHIPMENTS FOR WAREHOUSE %s:%n%s", w.getWarehouseId(), warehouseShipmentsString(w));
     }
 
     public String printAllWarehousesWithShipments(){
         String msg = String.format("SHIPMENTS FOR ALL WAREHOUSES:%n");
         for (Warehouse w : warehouseList){
-            String[] shipments = gson.exportShipmentsToJsonString(new ShipmentsWrapper(w.getShipments())).split("},");
-            String temp = "";
-            for(int i = 0; i<shipments.length; i++)
-                temp += String.format("%s%n\t\t\t\t\t\t\t\t  ", shipments[i] + (i < shipments.length - 1 ? "}," : ""));
-            msg += String.format("Warehouse ID - " + w.getWarehouseId()+":%n\t\t"+ temp +"%n");
+            msg += warehouseShipmentsString(w);
         }
         return msg;
+    }
+
+    public String warehouseShipmentsString(Warehouse w){
+        String[] shipments = gsonService.exportShipmentsToJsonString(new ShipmentsWrapper(w.getShipments())).split("},");
+        String temp = "";
+        for(int i = 0; i<shipments.length; i++)
+            temp += String.format("%s%n\t\t\t\t\t\t\t\t  ", shipments[i] + (i < shipments.length - 1 ? "}," : ""));
+        return String.format("Warehouse ID - " + w.getWarehouseId()+":%n\t\t"+ temp +"%n");
     }
 }

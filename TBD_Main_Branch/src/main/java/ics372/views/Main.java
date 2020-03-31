@@ -5,6 +5,7 @@ import ics372.model.Warehouse;
 import ics372.controllers.MainController;
 import ics372.services.DataService;
 import ics372.services.GsonService;
+import ics372.services.XmlService;
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -28,8 +29,11 @@ public class Main extends Application {
     Stage window;
     MainController controller;
     ComboBox warehouseComboBox;
+    TextArea textArea;
+    Label warehouseNameLabel;
     Button addShipmentButton;
     Button disableEnableFreightButton;
+    Boolean unload;
 
     @Override
     public void start(Stage primaryStage) {
@@ -37,7 +41,7 @@ public class Main extends Application {
          * 'data' directory is needed to save the state of the program
          */
         verifyDataDirectoryExists();
-        controller = new MainController(new DataService(), new GsonService());
+        controller = new MainController(new DataService(), new GsonService(), new XmlService());
         window = primaryStage;
         window.setTitle("GroupProject1");
         GridPane root = new GridPane();
@@ -76,12 +80,13 @@ public class Main extends Application {
         warehouseComboBox = new ComboBox();
 
         //text area
-        TextArea textArea = new TextArea();
+        textArea = new TextArea();
         textArea.setEditable(false);
         textArea.setScrollTop(Double.MAX_VALUE);
 
         //labels
-        Label warehouseLabel = new Label("Select Warehouse: ");
+        Label warehouseLabel = new Label("Warehouse: ");
+        warehouseNameLabel = new Label("Name: ");
         Label disableLabel = new Label("Disable/Enable Freight: ");
         Label addShipmentLabel = new Label("Add Shipment: ");
         Label exportLabel = new Label("Export All Shipments To Json File: ");
@@ -90,6 +95,7 @@ public class Main extends Application {
 
         root.add(fileChooserButton, 0, 0);
         root.add(warehouseLabel, 0, 1);
+        root.add(warehouseNameLabel,2, 1);
         root.add(disableLabel,0,2);
         root.add(addShipmentLabel,0,3);
         root.add(exportLabel,0,4);
@@ -112,8 +118,12 @@ public class Main extends Application {
                     new FileChooser.ExtensionFilter("All files", "*"));
             File file = fileChooser.showOpenDialog(window);
             if(file != null){
-                textArea.setText(controller.processInputFile(file.getAbsolutePath()));
+                String msg = controller.processInputFile(file.getAbsolutePath());
                 onLoad();
+                //display the results of the file load along with the list of shipments for selected warehouse
+                textArea.setText(String.format("%s%n%s",
+                        msg,
+                        controller.printShipmentsForWarehouse((Warehouse) warehouseComboBox.getValue())));
                 textArea.setScrollTop(Double.MAX_VALUE);
             }
         });
@@ -126,7 +136,12 @@ public class Main extends Application {
                           .filter(w -> w.getWarehouseId().equals(((Warehouse) warehouseComboBox.getValue()).getWarehouseId()))
                           .findFirst()
                           .get();
-
+                  //display warehouse name
+                  warehouseNameLabel.setText(String.format("Name: \"%s\"", warehouse.getWarehouseName() == null
+                          ? "N/A"
+                          : warehouse.getWarehouseName()));
+                  //display all shipments for the selected warehouse
+                  textArea.setText(controller.printShipmentsForWarehouse(warehouse));
                   enableDisableControlsOnFreightReceiptChange(warehouse);
               }
         });
@@ -199,9 +214,17 @@ public class Main extends Application {
 
     public void onLoad(){
         if(controller.getWarehouseList().size() > 0){
+            unload = true;
             warehouseComboBox.setItems(FXCollections.observableArrayList(controller.getWarehouseList()));
             warehouseComboBox.getSelectionModel().selectFirst();
-            enableDisableControlsOnFreightReceiptChange((Warehouse)warehouseComboBox.getValue());
+            Warehouse w = (Warehouse)warehouseComboBox.getValue();
+            /* display warehouse name */
+            warehouseNameLabel.setText(String.format("Name: \"%s\"", w.getWarehouseName() == null
+                    ? "N/A"
+                    : w.getWarehouseName()));
+            textArea.setText(controller.printShipmentsForWarehouse(w));
+            enableDisableControlsOnFreightReceiptChange(w);
+            unload = false;
         }
     }
 

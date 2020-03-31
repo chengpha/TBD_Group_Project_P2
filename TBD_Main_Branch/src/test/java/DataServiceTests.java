@@ -33,8 +33,8 @@ public class DataServiceTests {
         //Arrange some data
         warehouseList = new ArrayList<Warehouse>() {
             {
-                add(new Warehouse("12513"));
-                add(new Warehouse("15566"));
+                add(new Warehouse("12513", "Warehouse 12513"));
+                add(new Warehouse("15566", "Warehouse 15566"));
             }
         };
     }
