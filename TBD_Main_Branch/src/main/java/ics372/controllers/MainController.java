@@ -106,10 +106,19 @@ public class MainController {
         return dataService.retrieveCurrentState(dataDirectory);
     }
 
+    /**
+     * print out shipments for a warehouse
+     * @param w
+     * @return
+     */
     public String printShipmentsForWarehouse(Warehouse w){
         return String.format("SHIPMENTS FOR WAREHOUSE %s:%n%s", w.getWarehouseId(), warehouseShipmentsString(w));
     }
 
+    /**
+     * print out all shipments for each warehouse
+     * @return
+     */
     public String printAllWarehousesWithShipments(){
         String msg = String.format("SHIPMENTS FOR ALL WAREHOUSES:%n");
         for (Warehouse w : warehouseList){
@@ -118,6 +127,11 @@ public class MainController {
         return msg;
     }
 
+    /**
+     * helper method that produces an output for warehouse shipments
+     * @param w
+     * @return
+     */
     public String warehouseShipmentsString(Warehouse w){
         String[] shipments = gsonService.exportShipmentsToJsonString(new ShipmentsWrapper(w.getShipments())).split("},");
         String temp = "";

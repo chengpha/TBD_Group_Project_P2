@@ -140,7 +140,7 @@ public class Main extends Application {
                   warehouseNameLabel.setText(String.format("Name: \"%s\"", warehouse.getWarehouseName() == null
                           ? "N/A"
                           : warehouse.getWarehouseName()));
-                  //display all shipments for the selected warehouse
+                  /*print out shipments for selected warehouse*/
                   textArea.setText(controller.printShipmentsForWarehouse(warehouse));
                   enableDisableControlsOnFreightReceiptChange(warehouse);
               }
@@ -178,10 +178,14 @@ public class Main extends Application {
                     .findFirst()
                     .get();
 
-            if(warehouse.isFreightReceiptEnabled())
+            if(warehouse.isFreightReceiptEnabled()){
                 warehouse.disableFreightReceipt();
-            else
+                textArea.setText(String.format("Freight receipt has been disabled for warehouse %s.", warehouse.getWarehouseId()));
+            }
+            else{
                 warehouse.enableFreightReceipt();
+                textArea.setText(String.format("Freight receipt has been enabled for warehouse %s.", warehouse.getWarehouseId()));
+            }
 
             enableDisableControlsOnFreightReceiptChange(warehouse);
         });
@@ -222,6 +226,7 @@ public class Main extends Application {
             warehouseNameLabel.setText(String.format("Name: \"%s\"", w.getWarehouseName() == null
                     ? "N/A"
                     : w.getWarehouseName()));
+            /*print out shipments for selected warehouse*/
             textArea.setText(controller.printShipmentsForWarehouse(w));
             enableDisableControlsOnFreightReceiptChange(w);
             unload = false;
