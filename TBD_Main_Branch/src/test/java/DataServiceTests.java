@@ -24,10 +24,15 @@ public class DataServiceTests {
          * Otherwise they might interfere with other tests.
          */
         directoryPath = System.getProperty("user.dir") + "/data/";
-        try {
-            cleanDirectory(new File(directoryPath));
-        } catch (IOException e) {
-            e.printStackTrace();
+        File dataDirectory = new File(directoryPath);
+        if(!dataDirectory.exists())
+            dataDirectory.mkdir();
+        else {
+            try {
+                cleanDirectory(new File(directoryPath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         dataService = new DataService();
         //Arrange some data

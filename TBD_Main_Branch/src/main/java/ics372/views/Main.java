@@ -137,7 +137,7 @@ public class Main extends Application {
                           .findFirst()
                           .get();
                   //display warehouse name
-                  warehouseNameLabel.setText(String.format("Name: \"%s\"", warehouse.getWarehouseName() == null
+                  warehouseNameLabel.setText(String.format("Name: %s", warehouse.getWarehouseName() == null
                           ? "N/A"
                           : warehouse.getWarehouseName()));
                   /*print out shipments for selected warehouse*/
@@ -223,7 +223,7 @@ public class Main extends Application {
             warehouseComboBox.getSelectionModel().selectFirst();
             Warehouse w = (Warehouse)warehouseComboBox.getValue();
             /* display warehouse name */
-            warehouseNameLabel.setText(String.format("Name: \"%s\"", w.getWarehouseName() == null
+            warehouseNameLabel.setText(String.format("Name: %s", w.getWarehouseName() == null
                     ? "N/A"
                     : w.getWarehouseName()));
             /*print out shipments for selected warehouse*/
