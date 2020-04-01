@@ -69,7 +69,7 @@ public class DataServiceTests {
     }
 
     /**
-     * Clean the files up after the test.
+     * Clean up after the test.
      */
     @AfterEach
     public void FileCleanUp() {
