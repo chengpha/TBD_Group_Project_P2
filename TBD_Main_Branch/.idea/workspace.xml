@@ -1,13 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c3dd2401-802f-4f01-be85-ebd5492ed6eb" name="Default Changelist" comment="Added unit tests for Warehouse and XmlService classes.">
+      <change afterPath="$PROJECT_DIR$/.idea/TBD_Main_Branch.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/WarehouseTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/XmlServiceTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TBD_Main_Branchtest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
   <component name="ProjectId" id="1Y0tiCAtTchzWyPQ6Ew6IZYx5tJ" />
-  <component name="RunManager">
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ics372.Main" />
-      <module name="Group_one_project" />
+      <option name="MAIN_CLASS_NAME" value="ics372.views.Main" />
+      <module name="TBD_Main_Branch" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="ics372.*" />
@@ -18,10 +58,133 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DataServiceTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TBD_Main_Branch" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DataServiceTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GsonServiceTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TBD_Main_Branch" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="GsonServiceTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WarehouseTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TBD_Main_Branch" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="WarehouseTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="XmlServiceTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TBD_Main_Branch" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="XmlServiceTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.WarehouseTests" />
+      <item itemvalue="JUnit.DataServiceTests" />
+      <item itemvalue="JUnit.GsonServiceTests" />
+      <item itemvalue="JUnit.XmlServiceTests" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.XmlServiceTests" />
+        <item itemvalue="JUnit.WarehouseTests" />
+        <item itemvalue="JUnit.DataServiceTests" />
+        <item itemvalue="JUnit.GsonServiceTests" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c3dd2401-802f-4f01-be85-ebd5492ed6eb" name="Default Changelist" comment="" />
+      <created>1585511231902</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585511231902</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added unit tests for Warehouse and XmlService classes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added unit tests for Warehouse and XmlService classes." />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-1243" y="179" key="#Main" timestamp="1585617409086">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1243" y="179" key="#Main/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1585617409086" />
+    <state x="-1243" y="179" key="#Main/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1585595790393" />
+    <state x="-1363" y="188" key="#WarehouseTests" timestamp="1585614609695">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1363" y="188" key="#WarehouseTests/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1585614609695" />
+    <state x="-1506" y="176" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585624920595">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1506" y="176" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1585624920595" />
+    <state x="-1828" y="92" width="1736" height="856" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1585614786112">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1828" y="92" width="1736" height="856" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1585614786112" />
+    <state x="-1231" y="305" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1585620751169">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1231" y="305" key="#com.intellij.ide.util.TreeClassChooserDialog/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1585620751169" />
+    <state x="-1356" y="115" key="CommitChangelistDialog2" timestamp="1585708803633">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1356" y="115" key="CommitChangelistDialog2/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1585708803633" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1585708803654">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1585708803654" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1585708803654">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1585708803654" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1585708803654">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1585708803654" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1585708803654">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1585708803654" />
+    <state x="-1430" y="176" key="Maven.ArtifactSearchDialog" timestamp="1585607950100">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1430" y="176" key="Maven.ArtifactSearchDialog/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1585607950100" />
+    <state x="-1265" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1585511254450">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1265" y="345" key="com.intellij.ide.util.TipDialog/-1920.0.1920.1040/0.0.1920.1040@-1920.0.1920.1040" timestamp="1585511254450" />
+    <state x="-3840" y="0" width="1587" height="1025" maximized="true" key="dock-window-1" timestamp="1585605145460">
+      <screen x="-3840" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-3840" y="0" width="1587" height="1025" maximized="true" key="dock-window-1/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1585605145460" />
+    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1585608311895">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1585608311895" />
   </component>
 </project>

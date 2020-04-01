@@ -1,0 +1,11 @@
+<Shipments>
+	<Warehouse id="485" name="Warehouse 120"> 
+		<Shipment type="Air" id="15dde">
+			<Weight unit="kg">20.6</Weight>
+			<ReceiptDate>1732239329</ReceiptDate>
+		</Shipment>
+		<Shipment type="Truck" id="52523">
+			<Weight unit="kg">73</Weight>
+			<ReceiptDate>1732239329</ReceiptDate>
+		</Shipment>
+	</Warehouse></Shipments>
