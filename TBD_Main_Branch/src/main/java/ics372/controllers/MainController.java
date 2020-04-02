@@ -42,33 +42,33 @@ public class MainController {
         File f = new File(file);
         String ext = FilenameUtils.getExtension(f.getName());
 
-        // checks if the file has the xml ending, if it does parse it, otherwise assume its a json file
+        // Checks if the file has the xml ending, if it does parse it, otherwise assume its a json file.
         if(ext.equals("xml")) {
             try {
-                // turns the xml into usable data docs
+                // Turns the xml into usable data docs.
                 DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                 Document doc = dBuilder.parse(f);
                 doc.getDocumentElement().normalize();
 
-                // Gets all the shipment lists and puts them into a nodelist
+                // Gets all the shipment lists and puts them into a nodeList.
                 NodeList shipmentNodeList = doc.getElementsByTagName("Shipment");
 
-                // Loop through each shipment in the nodelist
+                // Loop through each shipment in the nodeList.
                 for (int index = 0; index < shipmentNodeList.getLength(); index++) {
                     Node shipment = shipmentNodeList.item(index);
 
                     if (shipment.getNodeType() == Node.ELEMENT_NODE) {
                         Element eElement = (Element) shipment;
 
-                        // Gets all the values needed
+                        // Gets all the values needed.
                         String warehouseID = ((Element) (shipment.getParentNode())).getAttribute("id"); // checks the shipment node parent, aka warehouse, and finds its ID
                         String shipmentID =  eElement.getAttribute("id"); // grabs the id attribute
                         String shipmentMethod = eElement.getAttribute("type"); // grabs the type attribute, aka air, rail, truck, etc.
                         Double weight = Double.parseDouble(doc.getElementsByTagName("Weight").item(index).getTextContent()); // gets the weight by index
                         Long receiptDate = Long.parseLong(doc.getElementsByTagName("ReceiptDate").item(index).getTextContent()); // gets the receipt date by index
 
-                        // Creates a shipment and adds it to the list
+                        // Creates a shipment and adds it to the list.
                         Shipment s = new Shipment(warehouseID, shipmentID, shipmentMethod, weight, receiptDate);
                         shipmentList.add(s);
                     }
@@ -100,7 +100,7 @@ public class MainController {
                         .get();
 
             /**
-             * if the freight receipt in the warehouse is disabled, do not add any shipments
+             * If the freight receipt in the warehouse is disabled, do not add any shipments.
              */
             if(!warehouse.isFreightReceiptEnabled()){
                 msg += String.format("Freight receipt is disabled for warehouse %s.Shipment %s won't be added.%n",
@@ -128,14 +128,14 @@ public class MainController {
     }
 
     /**
-     * save the current state of application
+     * Save the current state of application.
      */
     public void saveCurrentState() {
         data.saveCurrentState(warehouseList, dataDirectory);
     }
 
     /**
-     * retrieve the current state of application
+     * Retrieve the current state of application.
      * @return
      */
     public List<Warehouse> retrieveCurrentState(){

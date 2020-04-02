@@ -17,7 +17,7 @@ public class Shipment implements Serializable {
         this.receipt_date = receipt_date;
     }
 
-    //getters
+    //Getters
     public String getShipmentId(){ return shipment_id; }
 
     public String getWarehouseId(){ return warehouse_id; }

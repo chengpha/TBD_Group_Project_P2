@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DataService {
     /**
-     * save the current state of application
+     * Save the current state of application
      * @param warehouseList
      * @param filePath
      */
@@ -27,7 +27,7 @@ public class DataService {
     }
 
     /**
-     * retrieve the current state of application
+     * Retrieve the current state of application
      * @param filePath
      * @return
      */
