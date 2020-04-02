@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61797bb6-b7b1-45e3-b88a-a03ce4462ffb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +22,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.MainController">
     <configuration name="MainController" type="Application" factoryName="Application" temporary="true">
       <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
       <option name="MAIN_CLASS_NAME" value="ics372.views.Main" />
@@ -39,9 +37,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GsonServiceTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TBD_Main_Branch" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="GsonServiceTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.MainController" />
+        <item itemvalue="JUnit.GsonServiceTests" />
       </list>
     </recent_temporary>
   </component>
@@ -75,22 +83,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="198" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1585608556346" />
-    <state width="1493" height="211" key="GridCell.Tab.0.bottom" timestamp="1585662883066">
+    <state width="1493" height="211" key="GridCell.Tab.0.bottom" timestamp="1585849745761">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="211" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1585662883066" />
-    <state width="1493" height="211" key="GridCell.Tab.0.center" timestamp="1585662883066">
+    <state width="1493" height="211" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1585849745761" />
+    <state width="1493" height="211" key="GridCell.Tab.0.center" timestamp="1585849745761">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="211" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1585662883066" />
-    <state width="1493" height="211" key="GridCell.Tab.0.left" timestamp="1585662883066">
+    <state width="1493" height="211" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1585849745761" />
+    <state width="1493" height="211" key="GridCell.Tab.0.left" timestamp="1585849745761">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="211" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1585662883066" />
-    <state width="1493" height="211" key="GridCell.Tab.0.right" timestamp="1585662883066">
+    <state width="1493" height="211" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1585849745761" />
+    <state width="1493" height="211" key="GridCell.Tab.0.right" timestamp="1585849745761">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="211" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1585662883066" />
+    <state width="1493" height="211" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1585849745761" />
     <state x="467" y="239" key="com.intellij.ide.util.TipDialog" timestamp="1585842337559">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
