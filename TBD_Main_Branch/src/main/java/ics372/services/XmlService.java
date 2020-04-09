@@ -1,5 +1,6 @@
 package ics372.services;
 
+import ics372.interfaces.IFileService;
 import ics372.model.Shipment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -11,7 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class XmlService {
+public class XmlService implements IFileService {
     public Collection<Shipment> processInputFile(String file){
         Collection<Shipment> list = new ArrayList<>();
         try {

@@ -4,6 +4,7 @@ import ics372.model.Shipment;
 import ics372.dto.ShipmentsWrapper;
 import ics372.model.Warehouse;
 import ics372.services.DataService;
+import ics372.services.FileServiceFactory;
 import ics372.services.GsonService;
 import ics372.services.XmlService;
 import org.apache.commons.io.FilenameUtils;
@@ -39,14 +40,9 @@ public class MainController {
         String ext = FilenameUtils.getExtension(f.getName());
 
         /**
-         * checks if the file has the xml ending, if it does parse it, otherwise assume its a json file
+         * use FileServiceFactory to decide what service to use to process the incoming file
          */
-        if(ext.equals("xml")) {
-           shipmentList.addAll(xmlService.processInputFile(file));
-        } else {
-            shipmentList.addAll(gsonService.processInputFile(file));
-        }
-
+        shipmentList.addAll(FileServiceFactory.getFileService(ext).processInputFile(file));
         /**
          *  Create warehouses if they do not exist; add shipments to warehouses;
          *  Duplicate shipments are not allowed;
