@@ -42,4 +42,9 @@ public class GsonService implements IFileService {
         }
         return false;
     }
+
+    @Override
+    public String toString(){
+        return "gsonService";
+    }
 }

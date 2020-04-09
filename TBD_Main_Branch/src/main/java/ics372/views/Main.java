@@ -4,6 +4,7 @@ import ics372.dto.ShipmentsWrapper;
 import ics372.model.Warehouse;
 import ics372.controllers.MainController;
 import ics372.services.DataService;
+import ics372.services.FileServiceFactory;
 import ics372.services.GsonService;
 import ics372.services.XmlService;
 import javafx.application.Application;
@@ -41,7 +42,7 @@ public class Main extends Application {
          * 'data' directory is needed to save the state of the program
          */
         verifyDataDirectoryExists();
-        controller = new MainController(new DataService(), new GsonService(), new XmlService());
+        controller = new MainController(new DataService(), new GsonService(), new XmlService(), new FileServiceFactory());
         window = primaryStage;
         window.setTitle("GroupProject1");
         GridPane root = new GridPane();

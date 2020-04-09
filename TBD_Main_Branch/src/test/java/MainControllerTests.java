@@ -3,12 +3,14 @@ import ics372.dto.ShipmentsWrapper;
 import ics372.model.Shipment;
 import ics372.model.Warehouse;
 import ics372.services.DataService;
+import ics372.services.FileServiceFactory;
 import ics372.services.GsonService;
 import ics372.services.XmlService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.apache.commons.io.FileUtils.cleanDirectory;
@@ -31,7 +33,8 @@ public class MainControllerTests {
     XmlService xmlService;
     @Mock
     DataService dataService;
-
+    @Mock
+    FileServiceFactory fileServiceFactory;
 
     private String dataDirectory;
     private Warehouse warehouse1 = null;
@@ -58,7 +61,10 @@ public class MainControllerTests {
             add(shipment1);
             add(shipment2);
         }};
-        Mockito.lenient().when(gsonService.processInputFile(any(String.class))).thenReturn(shipments);
+
+        MockitoAnnotations.initMocks(this);
+        when(fileServiceFactory.getFileService(any(String.class))).thenReturn(gsonService);
+        when(gsonService.processInputFile(any(String.class))).thenReturn(shipments);
     }
 
     /**
@@ -70,7 +76,7 @@ public class MainControllerTests {
         /**
          * Act
          */
-        MainController mainController = new MainController(dataService, gsonService, xmlService);
+        MainController mainController = new MainController(dataService, gsonService, xmlService, fileServiceFactory);
         mainController.processInputFile("");
         for (Warehouse w : mainController.getWarehouseList()) {
             if(w.getWarehouseId().endsWith("1111"))
@@ -118,7 +124,7 @@ public class MainControllerTests {
         /**
          * Act
          */
-         MainController mainController = new MainController(dataService, gsonService, xmlService);
+         MainController mainController = new MainController(dataService, gsonService, xmlService, fileServiceFactory);
          mainController.processInputFile("");
 
         mainController.getWarehouseList()

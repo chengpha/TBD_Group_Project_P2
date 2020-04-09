@@ -22,8 +22,10 @@ public class MainController {
     private DataService dataService;
     private GsonService gsonService;
     private XmlService xmlService;
+    private FileServiceFactory fileServiceFactory;
 
-    public MainController(DataService dataService, GsonService gsonService, XmlService xmlService){
+    public MainController(DataService dataService, GsonService gsonService, XmlService xmlService, FileServiceFactory fileServiceFactory){
+        this.fileServiceFactory = fileServiceFactory;
         this.dataService = dataService;
         this.gsonService = gsonService;
         this.xmlService = xmlService;
@@ -42,7 +44,7 @@ public class MainController {
         /**
          * use FileServiceFactory to decide what service to use to process the incoming file
          */
-        shipmentList.addAll(FileServiceFactory.getFileService(ext).processInputFile(file));
+        shipmentList.addAll(fileServiceFactory.getFileService(ext).processInputFile(file));
         /**
          *  Create warehouses if they do not exist; add shipments to warehouses;
          *  Duplicate shipments are not allowed;
