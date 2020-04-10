@@ -13,8 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class XmlServiceTests
 {
     @Test
-    public void processInputFile_Test()
-    {
+    public void processInputFile_Test() throws Exception {
         List<Shipment> shipments;
         XmlService xmlService = new XmlService();
         String content = "<Shipments>\n" +

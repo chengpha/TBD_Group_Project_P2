@@ -4,5 +4,5 @@ import ics372.model.Shipment;
 import java.util.Collection;
 
 public interface IFileService {
-    Collection<Shipment> processInputFile(String file);
+    Collection<Shipment> processInputFile(String file) throws Exception;
 }

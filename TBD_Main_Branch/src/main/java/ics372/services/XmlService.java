@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class XmlService implements IFileService {
-    public Collection<Shipment> processInputFile(String file){
+    public Collection<Shipment> processInputFile(String file) throws Exception {
         Collection<Shipment> list = new ArrayList<>();
         try {
             // turns the xml into usable data docs
@@ -24,6 +24,8 @@ public class XmlService implements IFileService {
 
             // Gets all the shipment lists and puts them into a nodelist
             NodeList shipmentNodeList = doc.getElementsByTagName("Shipment");
+            if (shipmentNodeList.getLength() == 0)
+                    throw new Exception();
 
             // Loop through each shipment in the nodelist
             for (int index = 0; index < shipmentNodeList.getLength(); index++) {
@@ -46,7 +48,7 @@ public class XmlService implements IFileService {
                 }
             }
         } catch(Exception e) {
-            e.printStackTrace();
+            throw e;
         }
         return list;
     }

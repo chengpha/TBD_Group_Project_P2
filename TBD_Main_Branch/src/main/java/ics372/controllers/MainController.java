@@ -1,5 +1,6 @@
 package ics372.controllers;
 
+import ics372.interfaces.IFileService;
 import ics372.model.Shipment;
 import ics372.dto.ShipmentsWrapper;
 import ics372.model.Warehouse;
@@ -34,7 +35,7 @@ public class MainController {
 
     public List<Warehouse>  getWarehouseList(){ return warehouseList;}
 
-    public String processInputFile(String file){
+    public String processInputFile(String file) throws Exception {
         Collection<Shipment> shipmentList = new ArrayList<>();
         String msg = "";
 
@@ -44,7 +45,8 @@ public class MainController {
         /**
          * use FileServiceFactory to decide what service to use to process the incoming file
          */
-        shipmentList.addAll(fileServiceFactory.getFileService(ext).processInputFile(file));
+        IFileService fileService = fileServiceFactory.getFileService(ext);
+        shipmentList.addAll(fileService.processInputFile(file));
         /**
          *  Create warehouses if they do not exist; add shipments to warehouses;
          *  Duplicate shipments are not allowed;

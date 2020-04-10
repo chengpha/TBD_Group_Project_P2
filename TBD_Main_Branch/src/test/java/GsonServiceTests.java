@@ -28,7 +28,7 @@ public class GsonServiceTests {
     }
 
     @Test
-    public void processInputFile_Test(){
+    public void processInputFile_Test() throws Exception {
         /**
          * Act
          */

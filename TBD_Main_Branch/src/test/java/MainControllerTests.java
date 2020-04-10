@@ -41,7 +41,7 @@ public class MainControllerTests {
     private Warehouse warehouse2 = null;
 
     @BeforeEach
-    public void init() {
+    public void init() throws Exception {
         /**
          * The files in the data directory must be removed prior to running the tests.
          * Otherwise they might interfere with other tests.
@@ -72,7 +72,7 @@ public class MainControllerTests {
      */
 
     @Test
-    public void createWarehousesWithShipments_Test(){
+    public void createWarehousesWithShipments_Test() throws Exception {
         /**
          * Act
          */
@@ -120,7 +120,7 @@ public class MainControllerTests {
     }
 
     @Test
-    public void printAllWarehousesWithShipments_Test(){
+    public void printAllWarehousesWithShipments_Test() throws Exception {
         /**
          * Act
          */

@@ -119,7 +119,16 @@ public class Main extends Application {
                     new FileChooser.ExtensionFilter("All files", "*"));
             File file = fileChooser.showOpenDialog(window);
             if(file != null){
-                String msg = controller.processInputFile(file.getAbsolutePath());
+                String msg;
+                try {
+                     msg = controller.processInputFile(file.getAbsolutePath());
+                }
+                catch(Exception ex){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText(String.format("Failed to upload %s",file.getName().toUpperCase()));
+                    alert.show();
+                    return;
+                }
                 onLoad();
                 //display the results of the file load along with the list of shipments for selected warehouse
                 textArea.setText(String.format("%s%n%s",

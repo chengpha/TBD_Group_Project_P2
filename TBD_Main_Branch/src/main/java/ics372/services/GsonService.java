@@ -7,7 +7,6 @@ import ics372.dto.ShipmentsWrapper;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -15,14 +14,12 @@ import java.util.Collection;
  * Gson controller implements Gson library to perform JSON read/write file operations across the application.
  */
 public class GsonService implements IFileService {
-    public Collection<Shipment>  processInputFile(String file) {
-        Collection<Shipment> list = new ArrayList<>();
+    public Collection<Shipment> processInputFile(String file) throws Exception{
+        Collection<Shipment> list;
         try (Reader reader = new FileReader(file)) {
             list = new Gson().fromJson(reader, ShipmentsWrapper.class).getShipmentList();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw e;
         }
         return list;
     }
@@ -41,10 +38,5 @@ public class GsonService implements IFileService {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public String toString(){
-        return "gsonService";
     }
 }
