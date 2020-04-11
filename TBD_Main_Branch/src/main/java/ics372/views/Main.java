@@ -42,7 +42,7 @@ public class Main extends Application {
          * 'data' directory is needed to save the state of the program
          */
         verifyDataDirectoryExists();
-        controller = new MainController(new DataService(), new GsonService(), new XmlService(), new FileServiceFactory());
+        controller = new MainController(new DataService(), new GsonService(), new FileServiceFactory());
         window = primaryStage;
         window.setTitle("GroupProject1");
         GridPane root = new GridPane();
@@ -107,7 +107,7 @@ public class Main extends Application {
         root.add(textArea, 0, 5, 4, 2);
         root.add(printAllWarehouseShipmentsButton, 2, 7);
         root.add(closeButton, 3, 7);
-        window.setScene(new Scene(root, 1000, 600));
+        window.setScene(new Scene(root, 700, 600));
         window.show();
         onLoad();
 

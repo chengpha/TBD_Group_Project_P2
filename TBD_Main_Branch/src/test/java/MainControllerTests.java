@@ -30,8 +30,6 @@ public class MainControllerTests {
     @Mock
     GsonService gsonService;
     @Mock
-    XmlService xmlService;
-    @Mock
     DataService dataService;
     @Mock
     FileServiceFactory fileServiceFactory;
@@ -76,7 +74,7 @@ public class MainControllerTests {
         /**
          * Act
          */
-        MainController mainController = new MainController(dataService, gsonService, xmlService, fileServiceFactory);
+        MainController mainController = new MainController(dataService, gsonService, fileServiceFactory);
         mainController.processInputFile("");
         for (Warehouse w : mainController.getWarehouseList()) {
             if(w.getWarehouseId().endsWith("1111"))
@@ -124,7 +122,7 @@ public class MainControllerTests {
         /**
          * Act
          */
-         MainController mainController = new MainController(dataService, gsonService, xmlService, fileServiceFactory);
+         MainController mainController = new MainController(dataService, gsonService, fileServiceFactory);
          mainController.processInputFile("");
 
         mainController.getWarehouseList()

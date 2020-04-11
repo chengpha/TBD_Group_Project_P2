@@ -7,7 +7,6 @@ import ics372.model.Warehouse;
 import ics372.services.DataService;
 import ics372.services.FileServiceFactory;
 import ics372.services.GsonService;
-import ics372.services.XmlService;
 import org.apache.commons.io.FilenameUtils;
 import java.io.File;
 import java.util.ArrayList;
@@ -22,14 +21,12 @@ public class MainController {
     private List<Warehouse> warehouseList;
     private DataService dataService;
     private GsonService gsonService;
-    private XmlService xmlService;
     private FileServiceFactory fileServiceFactory;
 
-    public MainController(DataService dataService, GsonService gsonService, XmlService xmlService, FileServiceFactory fileServiceFactory){
+    public MainController(DataService dataService, GsonService gsonService, FileServiceFactory fileServiceFactory){
         this.fileServiceFactory = fileServiceFactory;
         this.dataService = dataService;
         this.gsonService = gsonService;
-        this.xmlService = xmlService;
         this.warehouseList = retrieveCurrentState();
     }
 
@@ -133,10 +130,33 @@ public class MainController {
      * @return
      */
     public String warehouseShipmentsString(Warehouse w){
-        String[] shipments = gsonService.exportShipmentsToJsonString(new ShipmentsWrapper(w.getShipments())).split("},");
-        String temp = "";
+        String[] shipments = gsonService.exportShipmentsToJsonString(new ShipmentsWrapper(w.getShipments())).split("\\[");
+        String result = "";
         for(int i = 0; i<shipments.length; i++)
-            temp += String.format("%s%n\t\t\t\t\t\t\t\t  ", shipments[i] + (i < shipments.length - 1 ? "}," : ""));
-        return String.format("Warehouse ID - " + w.getWarehouseId()+":%n\t\t"+ temp +"%n");
+            result += String.format(((i == 1)?"[%n":"")+"%s%n", (i == 1)?prettyJsonFormat(shipments[i]):shipments[i]);
+        return result;
+    }
+
+    /**
+     * helper method that formats a string in a Json-looking way
+     * @param temp
+     * @return
+     */
+    private String prettyJsonFormat(String temp){
+        String[] shipments  = temp.split(",\"");
+        temp = "";
+        for(int i = 0; i<shipments.length; i++)
+            temp += String.format(i != shipments.length - 1?(i == 0)?"\t%s,%n":"\t\"%s,%n":"\t\"%s%n", shipments[i]);
+
+        shipments = temp.split("},");
+        temp = "";
+        for(int i = 0; i<shipments.length; i++)
+            temp += String.format(i==shipments.length-1?"%s":"%s},%n\t",shipments[i]);
+
+        shipments = temp.split("]");
+        temp = "";
+        for(int i = 0; i<shipments.length; i++)
+            temp += String.format(((i == 1)?"]":"")+"%s%n",shipments[i]);
+        return temp;
     }
 }
